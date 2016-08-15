@@ -1,53 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="2">
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="false">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:id="@+id/fragmentContainer"
+             style="@style/stock_details_fragment_style"
+           >
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/chartViewPager"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1">
 
-            </android.support.v4.view.ViewPager>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/chartTabs"
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/chartViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                    </android.support.v4.view.ViewPager>
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/chartTabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabSelectedTextColor="@color/primary_dark"
+                        app:tabIndicatorColor="@color/primary_dark"
+                        android:layout_weight="1">
+
+                    </android.support.design.widget.TabLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="350dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1">
 
-            </android.support.design.widget.TabLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/stockDataTabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabSelectedTextColor="@color/primary_dark"
+                        app:tabIndicatorColor="@color/primary_dark"
+                        android:layout_weight="1">
+
+                    </android.support.design.widget.TabLayout>
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/stockDataViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                    </android.support.v4.view.ViewPager>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stockDetailsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Test" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

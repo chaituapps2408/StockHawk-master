@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
->
+    android:layout_margin="5dp">
 
-    <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/chart"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/detailsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
     />
 
 </FrameLayout>

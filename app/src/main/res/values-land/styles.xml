@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="stock_details_fragment_style">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">@dimen/fragment_details_width</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="stock_list_fragment_style">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">@dimen/fragment_stock_list_width</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+</resources>

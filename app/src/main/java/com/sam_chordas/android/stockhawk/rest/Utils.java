@@ -1,5 +1,7 @@
 package com.sam_chordas.android.stockhawk.rest;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -7,8 +9,10 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
+import com.sam_chordas.android.stockhawk.widget.WidgetProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,9 +30,22 @@ import yahoofinance.Stock;
  */
 public class Utils {
 
+    public static final int DECIMAL_PLACE = 3;
     private static String LOG_TAG = Utils.class.getSimpleName();
 
     public static boolean showPercent = true;
+
+
+    public static void updateWidget(Context context) {
+
+
+        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        final ComponentName cn = new ComponentName(context, WidgetProvider
+                .class);
+
+        int[] widgetIds = mgr.getAppWidgetIds(cn);
+        mgr.notifyAppWidgetViewDataChanged(widgetIds, R.id.listViewWidget);
+    }
 
     /**
      * Returns true if the network is available or about to become available.
@@ -37,6 +54,9 @@ public class Utils {
      * @return true if the network is available
      */
     static public boolean isNetworkAvailable(Context c) {
+        if (c == null) {
+            return false;
+        }
         ConnectivityManager cm =
                 (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -130,16 +150,27 @@ public class Utils {
                 QuoteProvider.Quotes.CONTENT_URI);
         try {
             String name = stock.getName();
-            BigDecimal change = stock.getQuote().getChange();
+            BigDecimal change = round(stock.getQuote().getChange(), DECIMAL_PLACE);
             String changeString = change.toPlainString();
-            if (changeString != null && !changeString.contains("-")) {
-                changeString = "+" + changeString;
+            /*NumberFormat plusMinusNF = new DecimalFormat("+#.##;-#.##");
+            String changeString = plusMinusNF.format(change);*/
+            if (changeString != null && changeString.contains("-")) {
+                //changeString = String."+" + changeString;
+                changeString = changeString.replace("-", "");
+                //changeString = String.format("+%f", changeString, change);
             }
-            BigDecimal changeInPercent = stock.getQuote().getChangeInPercent();
+
+            BigDecimal changeInPercent = round(stock.getQuote().getChangeInPercent(), DECIMAL_PLACE);
+            String changeInPercentStr = changeInPercent.toPlainString();
+            if (changeInPercentStr != null && changeInPercentStr.contains("-")) {
+                changeInPercentStr = changeInPercentStr.replace("-", "");
+                //changeInPercentStr = "-" + changeInPercentStr;
+            }
+
             builder.withValue(QuoteColumns.SYMBOL, stock.getSymbol().toUpperCase());
             builder.withValue(QuoteColumns.NAME, name);
-            builder.withValue(QuoteColumns.BIDPRICE, stock.getQuote().getBid().toPlainString());
-            builder.withValue(QuoteColumns.PERCENT_CHANGE, "%" + changeInPercent.toPlainString());
+            builder.withValue(QuoteColumns.BIDPRICE, round(stock.getQuote().getBid(), DECIMAL_PLACE).toPlainString());
+            builder.withValue(QuoteColumns.PERCENT_CHANGE, "%" + changeInPercentStr);
             builder.withValue(QuoteColumns.CHANGE, changeString);
             builder.withValue(QuoteColumns.ISCURRENT, 1);
             if (change.doubleValue() < 0) {
@@ -150,10 +181,16 @@ public class Utils {
 
         } catch (IllegalFormatException | NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException e) {
             e.printStackTrace();
+            return null;
         }
 
         return builder.build();
     }
+
+    public static BigDecimal round(BigDecimal bd, int decimalPlace) {
+        return bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+    }
+
 
     public static ContentProviderOperation buildBatchOperation(JSONObject jsonObject) {
         ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(

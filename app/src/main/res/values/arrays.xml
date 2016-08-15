@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stock_quote_details">
+        <item>Ask</item>
+        <item>Ask Size</item>
+        <item>Bid</item>
+        <item>Bid Size</item>
+        <item>Price</item>
+        <item>Last Trade Size</item>
+        <item>Last Trade Date Start</item>
+        <item>Last Trade Time Start</item>
+        <item>Last Trade Time</item>
+        <item>Open</item>
+        <item>Previous Close</item>
+        <item>Day Low</item>
+        <item>Day High</item>
+        <item>Year Low</item>
+        <item>Year High</item>
+        <item>Price Avg 50</item>
+        <item>Price Avg 200</item>
+        <item>Volume</item>
+        <item>Avg Volume</item>
+
+    </string-array>
+
+    <string-array name="stock_stats_details">
+        <item>Market Cap</item>
+        <item>Shares Float</item>
+        <item>Shares Outstanding</item>
+        <item>Shares Owned</item>
+        <item>EPS</item>
+        <item>PE</item>
+        <item>PEG</item>
+        <item>EPS Estimate Current Year</item>
+        <item>EPS Estimate Next Quarter</item>
+        <item>EPS Estimate Next Year</item>
+        <item>Price Book</item>
+        <item>Price Sales</item>
+        <item>Book Value Per Share</item>
+        <item>Revenue</item>
+        <item>EBITDA</item>
+        <item>One Year Target Price</item>
+        <item>Short Ratio</item>
+
+    </string-array>
+
+    <string-array name="stock_dividend_details">
+        <item>Pay Date</item>
+        <item>Ex Date</item>
+        <item>Annual Yield</item>
+        <item>Annual Yield Percent</item>
+    </string-array>
+</resources>

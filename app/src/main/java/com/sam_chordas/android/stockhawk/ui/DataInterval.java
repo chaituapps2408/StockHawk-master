@@ -87,25 +87,48 @@ public class DataInterval {
         String title;
         switch (intervalType) {
             case INTERVAL_TYPE_5_DAYS:
-                title = "5 days";
+                title = "5 D";
                 break;
             case INTERVAL_TYPE_3_MONTHS:
-                title = "3 months";
+                title = "3 M";
                 break;
             case INTERVAL_TYPE_6_MONTHS:
-                title = "6 months";
+                title = "6 M";
                 break;
             case INTERVAL_TYPE_1_YEARS:
-                title = "1 year";
+                title = "1 Y";
                 break;
             case INTERVAL_TYPE_2_YEARS:
-                title = "2 years";
+                title = "2 Y";
                 break;
             default:
-                title = "5 days";
+                title = "5 D";
                 break;
         }
 
         return title;
     }
+
+    public static String getXAxisName(int intervalType) {
+        String title;
+        switch (intervalType) {
+            case INTERVAL_TYPE_5_DAYS:
+                title = "Days";
+                break;
+            case INTERVAL_TYPE_3_MONTHS:
+            case INTERVAL_TYPE_6_MONTHS:
+                title = "Weeks";
+                break;
+            case INTERVAL_TYPE_1_YEARS:
+            case INTERVAL_TYPE_2_YEARS:
+                title = "Months";
+                break;
+            default:
+                title = "Days";
+                break;
+        }
+
+        return title;
+    }
+
 }

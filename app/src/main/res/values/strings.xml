@@ -13,4 +13,6 @@
   <string name="stock_exists_msg">This stock is already saved!</string>
   <string name="add_new_stock">Add new stock</string>
   <string name="add_stock">Please Add a stock</string>
+
+
 </resources>

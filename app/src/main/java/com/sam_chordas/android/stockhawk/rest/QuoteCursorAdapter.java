@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
+import com.sam_chordas.android.stockhawk.service.StockIntentService;
 import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperAdapter;
 import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperViewHolder;
 
@@ -26,7 +28,7 @@ import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperViewHolder;
 public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAdapter.ViewHolder>
         implements ItemTouchHelperAdapter {
 
-    private static Context mContext;
+    private Context mContext;
     private static Typeface robotoLight;
     private boolean isPercent;
     View emptyView;
@@ -85,6 +87,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         String symbol = c.getString(c.getColumnIndex(QuoteColumns.SYMBOL));
         mContext.getContentResolver().delete(QuoteProvider.Quotes.withSymbol(symbol), null, null);
         notifyItemRemoved(position);
+        Utils.updateWidget(mContext);
     }
 
     @Override
@@ -96,10 +99,14 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     public Cursor swapCursor(Cursor newCursor) {
         Cursor cursor = super.swapCursor(newCursor);
         emptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
-        if (updateEmptyViewListener != null && emptyView.getVisibility() == View.VISIBLE) {
+        if (newCursor!=null && updateEmptyViewListener != null && emptyView.getVisibility() == View.VISIBLE) {
             updateEmptyViewListener.updateEmptyView();
         }
         return cursor;
+    }
+
+    public void selectItem(int selectedPosition) {
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
@@ -108,8 +115,11 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         public final TextView bidPrice;
         public final TextView change;
 
+        Drawable itemBG;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            itemBG = itemView.getBackground();
             symbol = (TextView) itemView.findViewById(R.id.stock_symbol);
             symbol.setTypeface(robotoLight);
             bidPrice = (TextView) itemView.findViewById(R.id.bid_price);
@@ -124,7 +134,11 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
 
         @Override
         public void onItemClear() {
-            itemView.setBackgroundColor(0);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                itemView.setBackgroundDrawable(itemBG);
+            } else {
+                itemView.setBackground(itemBG);
+            }
         }
 
         @Override
@@ -133,7 +147,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         }
     }
 
-    public static interface UpdateEmptyViewListener {
+    public interface UpdateEmptyViewListener {
         void updateEmptyView();
     }
 }

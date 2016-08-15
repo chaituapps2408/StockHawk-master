@@ -1,24 +1,62 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme"
-      parent="Theme.AppCompat">
-      <item name="colorPrimary">@color/material_blue_500</item>
-      <item name="colorPrimaryDark">@color/material_blue_700</item>
-    <!-- Customize your theme here. -->
-  </style>
 
-  <style name="PercentChangeTextStyle">
-    <item name="android:textSize">20sp</item>
-    <item name="android:textColor">#FFF</item>
-    <item name="android:textStyle">bold</item>
-  </style>
-  <style name="BidPriceTextStyle">
-    <item name="android:textSize">20sp</item>
-  </style>
-  <style name="StockSymbolTextStyle">
-    <item name="android:textSize">25sp</item>
-    <item name="android:textAllCaps">true</item>
-  </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
+    </style>
+
+
+    <!-- Settings activity theme. -->
+    <style name="SettingsTheme" parent="AppTheme"></style>
+
+    <style name="AppTheme.Main" parent="@style/AppTheme" />
+
+    <style name="AppTheme.Details" parent="@style/AppTheme" />
+
+    <!-- main activity toolbar style -->
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
+    </style>
+
+    <style name="stock_details_fragment_style">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="stock_list_fragment_style">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;
+    <style name="AppTheme"
+           parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/material_blue_500</item>
+        <item name="colorPrimaryDark">@color/material_blue_700</item>
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+    </style>-->
+
+    <style name="PercentChangeTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BidPriceTextStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="StockSymbolTextStyle">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 
 </resources>

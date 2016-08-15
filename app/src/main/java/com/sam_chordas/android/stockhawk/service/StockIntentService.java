@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.gcm.TaskParams;
+import com.sam_chordas.android.stockhawk.rest.Utils;
 
 /**
  * Created by sam_chordas on 10/1/15.
@@ -30,7 +31,9 @@ public class StockIntentService extends IntentService {
         }
         // We can call OnRunTask from the intent service to force it to run immediately instead of
         // scheduling a task.
-        int result = stockTaskService.onRunTask(new TaskParams(intent.getStringExtra("tag"), args));
+        stockTaskService.onRunTask(new TaskParams(intent.getStringExtra("tag"), args));
+
+        Utils.updateWidget(StockIntentService.this);
 
     }
 }

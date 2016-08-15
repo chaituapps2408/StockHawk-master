@@ -3,87 +3,69 @@ package com.sam_chordas.android.stockhawk.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sam_chordas.android.stockhawk.R;
-import com.sam_chordas.android.stockhawk.service.StockDetailsLoaderManager;
+import com.sam_chordas.android.stockhawk.models.HistoricalQuoteModel;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import lecho.lib.hellocharts.view.LineChartView;
-import yahoofinance.histquotes.HistoricalQuote;
 
-public class StockHistoricalDataFragment extends Fragment implements LoaderManager
-        .LoaderCallbacks<List<HistoricalQuote>> {
+public class StockHistoricalDataFragment extends Fragment {
 
-    public static final String STOCK_SYMBOL = "stock_symbol";
-    public static final String INTERVAL_TYPE = "interval_type";
+    public static final String STOCK_HISTORICAL_DATA = "STOCK_HISTORICAL_DATA";
+    public static final String INTERVAL_TYPE = "INTERVAL_TYPE";
 
     LineChartView chart;
 
-    String stockSymbol;
+    ArrayList<HistoricalQuoteModel> historicalQuotes;
+
+    @DataInterval.IntervalType
     int intervalType;
 
-    public static StockHistoricalDataFragment newInstance(String stockSymbol, int position) {
+    @DataInterval.IntervalType
+    public static StockHistoricalDataFragment newInstance(ArrayList<HistoricalQuoteModel>
+                                                                  historicalQuotes, int intervalType) {
 
         StockHistoricalDataFragment fragment = new StockHistoricalDataFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(STOCK_SYMBOL, stockSymbol);
-        bundle.putInt(INTERVAL_TYPE, position);
+        bundle.putParcelableArrayList(STOCK_HISTORICAL_DATA, historicalQuotes);
+        bundle.putInt(INTERVAL_TYPE, intervalType);
+
         fragment.setArguments(bundle);
 
         return fragment;
     }
 
+    @DataInterval.IntervalType
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getLoaderManager().initLoader(1, null, this).forceLoad();
+        if (getArguments() != null) {
+            historicalQuotes = getArguments().getParcelableArrayList(STOCK_HISTORICAL_DATA);
+            @DataInterval.IntervalType
+            int type = getArguments().getInt(INTERVAL_TYPE);
+            intervalType = type;
+        }
     }
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if (getArguments() != null) {
-            stockSymbol = getArguments().getString(STOCK_SYMBOL);
-            intervalType = getArguments().getInt(INTERVAL_TYPE);
-        }
 
         View view = inflater.inflate(R.layout.fragment_line_graph, container, false);
         chart = (LineChartView) view.findViewById(R.id.chart);
         chart.setVisibility(View.INVISIBLE);
-        getLoaderManager().restartLoader(1,null,this).forceLoad();
+
+        HelloChartUIHelper.initChart(chart, historicalQuotes, intervalType);
+
         return view;
     }
 
 
-
-
-    @Override
-    public Loader<List<HistoricalQuote>> onCreateLoader(int id, Bundle args) {
-
-        return new StockDetailsLoaderManager(getContext(), intervalType, stockSymbol);
-    }
-
-
-    @Override
-    public void onLoadFinished(Loader<List<HistoricalQuote>> loader, List<HistoricalQuote> data) {
-
-        HelloChartUIHelper.initChart(chart, data);
-
-    }
-
-
-    @Override
-    public void onLoaderReset(Loader<List<HistoricalQuote>> loader) {
-
-    }
 }
 
