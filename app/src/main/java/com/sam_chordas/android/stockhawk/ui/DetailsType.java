@@ -29,21 +29,21 @@ public class DetailsType {
             DetailsType.DETAIL_TYPE_DIVIDEND};
 
 
-    public static String getStockDetailTitle(int detailType) {
+    public static String getStockDetailTitle(Context context, int detailType) {
 
         String title;
         switch (detailType) {
             case DETAIL_TYPE_QUOTE:
-                title = "Quote";
+                title = context.getString(R.string.stock_data_title_quote);
                 break;
             case DETAIL_TYPE_STATS:
-                title = "Stats";
+                title = context.getString(R.string.stock_data_title_stocks);
                 break;
             case DETAIL_TYPE_DIVIDEND:
-                title = "Dividend";
+                title = context.getString(R.string.stock_data_title_dividend);
                 break;
             default:
-                title = "Quote";
+                title = context.getString(R.string.stock_data_title_quote);
                 break;
         }
 

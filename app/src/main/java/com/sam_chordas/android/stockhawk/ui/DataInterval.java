@@ -1,6 +1,9 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.content.Context;
 import android.support.annotation.IntDef;
+
+import com.sam_chordas.android.stockhawk.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -83,48 +86,74 @@ public class DataInterval {
         return interval;
     }
 
-    public static String getIntervalTitle(int intervalType) {
+    public static String getIntervalTitle(Context context, int intervalType) {
         String title;
         switch (intervalType) {
             case INTERVAL_TYPE_5_DAYS:
-                title = "5 D";
+                title = context.getString(R.string.chart_interval_title_5d);
                 break;
             case INTERVAL_TYPE_3_MONTHS:
-                title = "3 M";
+                title = context.getString(R.string.chart_interval_title_3m);
                 break;
             case INTERVAL_TYPE_6_MONTHS:
-                title = "6 M";
+                title = context.getString(R.string.chart_interval_title_6m);
                 break;
             case INTERVAL_TYPE_1_YEARS:
-                title = "1 Y";
+                title = context.getString(R.string.chart_interval_title_1y);
                 break;
             case INTERVAL_TYPE_2_YEARS:
-                title = "2 Y";
+                title = context.getString(R.string.chart_interval_title_2y);
                 break;
             default:
-                title = "5 D";
+                title = context.getString(R.string.chart_interval_title_5d);
                 break;
         }
 
         return title;
     }
 
-    public static String getXAxisName(int intervalType) {
+    public static String getIntervalContentDescription(Context context, int intervalType) {
         String title;
         switch (intervalType) {
             case INTERVAL_TYPE_5_DAYS:
-                title = "Days";
+                title = context.getString(R.string.chart_interval_content_desc_5d);
+                break;
+            case INTERVAL_TYPE_3_MONTHS:
+                title = context.getString(R.string.chart_interval_content_desc_3m);
+                break;
+            case INTERVAL_TYPE_6_MONTHS:
+                title = context.getString(R.string.chart_interval_content_desc_6m);
+                break;
+            case INTERVAL_TYPE_1_YEARS:
+                title = context.getString(R.string.chart_interval_content_desc_1y);
+                break;
+            case INTERVAL_TYPE_2_YEARS:
+                title = context.getString(R.string.chart_interval_content_desc_2y);
+                break;
+            default:
+                title = context.getString(R.string.chart_interval_content_desc_5d);
+                break;
+        }
+
+        return title;
+    }
+
+    public static String getXAxisName(Context context,int intervalType) {
+        String title;
+        switch (intervalType) {
+            case INTERVAL_TYPE_5_DAYS:
+                title = context.getString(R.string.axis_title_days);
                 break;
             case INTERVAL_TYPE_3_MONTHS:
             case INTERVAL_TYPE_6_MONTHS:
-                title = "Weeks";
+                title = context.getString(R.string.axis_title_weeks);
                 break;
             case INTERVAL_TYPE_1_YEARS:
             case INTERVAL_TYPE_2_YEARS:
-                title = "Months";
+                title = context.getString(R.string.axis_title_months);
                 break;
             default:
-                title = "Days";
+                title = context.getString(R.string.axis_title_days);
                 break;
         }
 

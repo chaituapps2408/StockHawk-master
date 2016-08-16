@@ -61,7 +61,7 @@ public class StockHistoricalDataFragment extends Fragment {
         chart = (LineChartView) view.findViewById(R.id.chart);
         chart.setVisibility(View.INVISIBLE);
 
-        HelloChartUIHelper.initChart(chart, historicalQuotes, intervalType);
+        HelloChartUIHelper.initChart(getContext(), chart, historicalQuotes, intervalType);
 
         return view;
     }

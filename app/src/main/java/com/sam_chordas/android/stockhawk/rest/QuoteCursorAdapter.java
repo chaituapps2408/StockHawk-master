@@ -56,28 +56,36 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         viewHolder.symbol.setContentDescription(cursor.getString(cursor.getColumnIndex("name")));
         viewHolder.bidPrice.setText(cursor.getString(cursor.getColumnIndex("bid_price")));
         int sdk = Build.VERSION.SDK_INT;
-        if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1) {
-            if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.change.setBackgroundDrawable(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
-            } else {
-                viewHolder.change.setBackground(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
-            }
-        } else {
-            if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.change.setBackgroundDrawable(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
-            } else {
-                viewHolder.change.setBackground(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
-            }
-        }
         if (Utils.showPercent) {
             viewHolder.change.setText(cursor.getString(cursor.getColumnIndex("percent_change")));
         } else {
             viewHolder.change.setText(cursor.getString(cursor.getColumnIndex("change")));
         }
+        int isUp = cursor.getInt(cursor.getColumnIndex("is_up"));
+        if (isUp == 1) {
+            if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
+                viewHolder.change.setBackgroundDrawable(
+                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
+            } else {
+                viewHolder.change.setBackground(
+                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
+
+            }
+
+            viewHolder.change.setContentDescription(mContext.getString(R.string.up_by_string) + viewHolder.change.getText());
+
+        } else {
+            if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
+                viewHolder.change.setBackgroundDrawable(
+                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
+            } else {
+                viewHolder.change.setBackground(
+                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
+            }
+            viewHolder.change.setContentDescription(mContext.getString(R.string.down_by_string) + viewHolder.change.getText());
+
+        }
+
     }
 
     @Override
@@ -99,7 +107,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     public Cursor swapCursor(Cursor newCursor) {
         Cursor cursor = super.swapCursor(newCursor);
         emptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
-        if (newCursor!=null && updateEmptyViewListener != null && emptyView.getVisibility() == View.VISIBLE) {
+        if (newCursor != null && updateEmptyViewListener != null && emptyView.getVisibility() == View.VISIBLE) {
             updateEmptyViewListener.updateEmptyView();
         }
         return cursor;

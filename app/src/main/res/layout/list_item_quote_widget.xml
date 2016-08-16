@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="right|end">
 
@@ -36,23 +36,43 @@
                 android:id="@+id/bid_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:paddingEnd="@dimen/bip_price_padding"
                 android:paddingRight="@dimen/bip_price_padding"
                 android:textAppearance="@android:style/TextAppearance.Small"
                 android:textColor="@android:color/black"
                 tools:text="1000.00"/>
 
-            <TextView
-                android:id="@+id/change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/percent_text_padding"
-                android:paddingLeft="@dimen/percent_text_padding"
-                android:paddingRight="@dimen/percent_text_padding"
-                android:paddingStart="@dimen/percent_text_padding"
-                android:textAppearance="@android:style/TextAppearance.Small"
-                android:textColor="@color/material_green_700"
-                tools:text="100%"/>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_gravity="center_vertical"
+                          android:orientation="vertical"
+                          android:paddingEnd="@dimen/percent_text_padding"
+                          android:paddingLeft="@dimen/percent_text_padding"
+                          android:paddingRight="@dimen/percent_text_padding"
+                          android:paddingStart="@dimen/percent_text_padding"
+                          android:weightSum="2">
+                <TextView
+                    android:id="@+id/change"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/material_green_700"
+                    tools:text="100%"/>
+
+                <TextView
+                    android:id="@+id/changePercentage"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/material_green_700"
+                    tools:text="100"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

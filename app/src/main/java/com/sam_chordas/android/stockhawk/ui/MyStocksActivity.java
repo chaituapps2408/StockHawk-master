@@ -6,12 +6,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.Space;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ObservableScrollView;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
@@ -27,7 +30,8 @@ import com.sam_chordas.android.stockhawk.rest.Utils;
 import com.sam_chordas.android.stockhawk.service.StockIntentService;
 import com.sam_chordas.android.stockhawk.service.StockTaskService;
 
-public class MyStocksActivity extends AppCompatActivity implements MyStockListFragment.OnItemSelectedListener {
+public class MyStocksActivity extends AppCompatActivity implements MyStockListFragment
+        .OnItemSelectedListener, AttachViewToFabListener {
 
     private static final String DETAIL_FRAGMENT_TAG = "DetailFragment";
     /**
@@ -43,6 +47,7 @@ public class MyStocksActivity extends AppCompatActivity implements MyStockListFr
     FrameLayout stockDetailsContainer;
     Space spaceView;
     TextView stockSymbol;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +57,7 @@ public class MyStocksActivity extends AppCompatActivity implements MyStockListFr
         setContentView(R.layout.activity_my_stocks);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        stockSymbol  = (TextView) toolbar.findViewById(R.id.stockSymbol);
+        stockSymbol = (TextView) toolbar.findViewById(R.id.stockSymbol);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -90,9 +95,9 @@ public class MyStocksActivity extends AppCompatActivity implements MyStockListFr
         }
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        //fab.attachToRecyclerView(recyclerView);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,5 +175,25 @@ public class MyStocksActivity extends AppCompatActivity implements MyStockListFr
                 .replace(R.id.stockDetailsContainer, fragment, DETAIL_FRAGMENT_TAG)
                 .commit();
     }
+
+
+    @Override
+    public void onAttachViewToFabListener(View scrollView) {
+        if (isTowPane) {
+
+            if (scrollView instanceof ScrollView && fab != null) {
+
+                fab.attachToScrollView((ObservableScrollView) scrollView);
+            }
+
+        } else {
+            if (scrollView instanceof RecyclerView && fab != null) {
+                fab.attachToRecyclerView((RecyclerView) scrollView);
+            }
+        }
+    }
 }
 
+interface AttachViewToFabListener {
+    void onAttachViewToFabListener(View scrollView);
+}

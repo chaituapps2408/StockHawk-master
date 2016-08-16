@@ -47,6 +47,9 @@ public class MyStockListFragment extends Fragment implements LoaderManager.Loade
 
     private int selectedPosition = -1;
 
+    RecyclerView recyclerView;
+    AppBarLayout appbarView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,7 @@ public class MyStockListFragment extends Fragment implements LoaderManager.Loade
                 networkToast();
             }
         }
-        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         emptyView = (TextView) v.findViewById(R.id.emptyView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getActivity().getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
@@ -109,8 +112,10 @@ public class MyStockListFragment extends Fragment implements LoaderManager.Loade
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
 
-        final AppBarLayout appbarView = (AppBarLayout)v.findViewById(R.id.appbar);
+        //Landscape - Phones and tablets
+        appbarView = (AppBarLayout) v.findViewById(R.id.appbar);
         if (null != appbarView) {
+
             ViewCompat.setElevation(appbarView, 0);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -125,11 +130,14 @@ public class MyStockListFragment extends Fragment implements LoaderManager.Loade
                     }
                 });
             }
+            //attachFabToRecyclerView();
+
         }
 
+        //portrait - phones
         final View parallaxView = v.findViewById(R.id.parallax_bar);
         if (null != parallaxView) {
-
+            displayTitleInLandscape();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -151,6 +159,28 @@ public class MyStockListFragment extends Fragment implements LoaderManager.Loade
         return v;
     }
 
+
+    private void displayTitleInLandscape() {
+
+        //Attach recyclerview to FAB - Port - All
+        getActivity().setTitle(getString(R.string.app_name));
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        attachFabToRecyclerView();
+    }
+
+    private void attachFabToRecyclerView() {
+
+        //Attach recyclerview to FAB - Port - All
+        if (getActivity() instanceof AttachViewToFabListener && appbarView != null &&
+                recyclerView != null) {
+            ((AttachViewToFabListener) getActivity()).onAttachViewToFabListener(recyclerView);
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

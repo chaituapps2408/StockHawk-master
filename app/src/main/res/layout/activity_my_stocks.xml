@@ -1,9 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:fab="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -13,9 +13,11 @@
             android:id="@+id/stock_list_fragment"
             android:name="com.sam_chordas.android.stockhawk.ui.MyStockListFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            fab:layout="@layout/fragment_stock_list">
 
         </fragment>
+
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fab"
@@ -25,12 +27,11 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/add_new_stock"
             android:src="@drawable/ic_add_white_24dp"
-            fab:fab_colorNormal="@color/material_blue_500"
-            fab:fab_colorPressed="@color/material_blue_600"
+            app:fab_colorNormal="@color/material_blue_500"
+            app:fab_colorPressed="@color/material_blue_600"
+            app:fab_shadow="true"
+            app:fab_type="normal"
             fab:fab_colorRipple="@color/ripple"
-            fab:fab_shadow="true"
-            fab:fab_type="normal"
-            fab:layout_anchor="recycler_view"
-            fab:layout_anchorGravity="bottom | end" />
+            fab:layout_anchorGravity="bottom | end|right"/>
     </FrameLayout>
 </RelativeLayout>

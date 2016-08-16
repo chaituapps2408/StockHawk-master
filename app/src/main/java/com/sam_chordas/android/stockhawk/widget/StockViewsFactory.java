@@ -68,22 +68,33 @@ public class StockViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         rows.moveToPosition(position);
         row.setTextViewText(R.id.stock_symbol, rows.getString(rows.getColumnIndex(QuoteColumns.SYMBOL)));
         row.setTextViewText(R.id.bid_price, rows.getString(rows.getColumnIndex(QuoteColumns.BIDPRICE)));
-        row.setTextViewText(R.id.change, rows.getString(rows.getColumnIndex(QuoteColumns.PERCENT_CHANGE)));
+        row.setTextViewText(R.id.changePercentage, rows.getString(rows.getColumnIndex(QuoteColumns
+                .PERCENT_CHANGE)));
+        row.setTextViewText(R.id.change, rows.getString(rows.getColumnIndex(QuoteColumns
+                .CHANGE)));
         if (rows.getInt(rows.getColumnIndex("is_up")) == 1) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                row.setTextColor(R.id.changePercentage, ctxt.getResources().getColor(R.color
+                        .material_green_700));
                 row.setTextColor(R.id.change, ctxt.getResources().getColor(R.color
                         .material_green_700));
 
             } else {
+                row.setTextColor(R.id.changePercentage, ctxt.getResources().getColor(R.color
+                        .material_green_700, null));
                 row.setTextColor(R.id.change, ctxt.getResources().getColor(R.color
                         .material_green_700, null));
             }
         } else {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                row.setTextColor(R.id.changePercentage, ctxt.getResources().getColor(R.color
+                        .material_red_700));
                 row.setTextColor(R.id.change, ctxt.getResources().getColor(R.color
                         .material_red_700));
 
             } else {
+                row.setTextColor(R.id.changePercentage, ctxt.getResources().getColor(R.color
+                        .material_red_700, null));
                 row.setTextColor(R.id.change, ctxt.getResources().getColor(R.color
                         .material_red_700, null));
             }

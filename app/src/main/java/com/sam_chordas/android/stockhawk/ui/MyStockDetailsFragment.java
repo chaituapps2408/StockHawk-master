@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.melnykov.fab.ObservableScrollView;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.models.StockDetailsModel;
 import com.sam_chordas.android.stockhawk.service.StockDetailsLoaderManager;
@@ -46,8 +47,10 @@ public class MyStockDetailsFragment extends Fragment implements LoaderManager
         if (getArguments() != null) {
             stockSymbol = getArguments().getString(STOCK_SYMBOL);
         }
-        adapter = new ChartFragmentsPagerAdapter(getActivity().getSupportFragmentManager());
-        stockDataAdapter = new StockDataViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter = new ChartFragmentsPagerAdapter(getActivity()
+                .getSupportFragmentManager(), getContext());
+        stockDataAdapter = new StockDataViewPagerAdapter(getActivity()
+                .getSupportFragmentManager(), getContext());
 
         getLoaderManager().initLoader(1, null, this).forceLoad();
 
@@ -65,11 +68,31 @@ public class MyStockDetailsFragment extends Fragment implements LoaderManager
         chartsViewPager.setAdapter(adapter);
         chartsTabLayout.setupWithViewPager(chartsViewPager);
 
+        for (int i = 0; i < chartsTabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = chartsTabLayout.getTabAt(i);
+            if (tab != null) {
+                tab.setContentDescription(DataInterval.getIntervalContentDescription
+                        (getContext(), DataInterval
+                                .intervalTypeSequence[i]));
+            }
+
+        }
+
         stockDataViewPager = (ViewPager) view.findViewById(R.id.stockDataViewPager);
         stockDataTabs = (TabLayout) view.findViewById(R.id.stockDataTabs);
         stockDataViewPager.setAdapter(stockDataAdapter);
         stockDataTabs.setupWithViewPager(stockDataViewPager);
 
+        ObservableScrollView observableScrollView = (ObservableScrollView) view.findViewById(R.id
+                .observableScrollView);
+
+        //Landscape - All
+        if (observableScrollView != null) {
+            //Attach recyclerview to FAB - Landscape Tablets
+            if (getActivity() instanceof AttachViewToFabListener) {
+                ((AttachViewToFabListener) getActivity()).onAttachViewToFabListener(observableScrollView);
+            }
+        }
 
         return view;
     }

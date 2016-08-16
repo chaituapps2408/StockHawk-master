@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -16,9 +17,11 @@ public class ChartFragmentsPagerAdapter extends FragmentStatePagerAdapter {
 
 
     SparseArray<ArrayList<HistoricalQuoteModel>> historicQuoteSeq;
+    Context context;
 
-    public ChartFragmentsPagerAdapter(FragmentManager fm) {
+    public ChartFragmentsPagerAdapter(FragmentManager fm,Context context) {
         super(fm);
+        this.context = context;
     }
 
 
@@ -44,8 +47,10 @@ public class ChartFragmentsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return DataInterval.getIntervalTitle(DataInterval.intervalTypeSequence[position]);
+        return DataInterval.getIntervalTitle(context,DataInterval.intervalTypeSequence[position]);
     }
+
+
 
     @Override
     public int getCount() {

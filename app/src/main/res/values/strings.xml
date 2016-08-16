@@ -13,6 +13,24 @@
   <string name="stock_exists_msg">This stock is already saved!</string>
   <string name="add_new_stock">Add new stock</string>
   <string name="add_stock">Please Add a stock</string>
-
+  <string name="up_by_string">up by </string>
+  <string name="down_by_string">down by </string>
+  <string name="chart_interval_title_5d">5 D</string>
+  <string name="chart_interval_title_3m">3 M</string>
+  <string name="chart_interval_title_6m">6 M</string>
+  <string name="chart_interval_title_1y">1 Y</string>
+  <string name="chart_interval_title_2y">2 Y</string>
+  <string name="chart_interval_content_desc_5d">5 Days</string>
+  <string name="chart_interval_content_desc_3m">3 Months</string>
+  <string name="chart_interval_content_desc_6m">6 Months</string>
+  <string name="chart_interval_content_desc_1y">1 Year</string>
+  <string name="chart_interval_content_desc_2y">2 Years</string>
+  <string name="axis_title_days">Days</string>
+  <string name="axis_title_weeks">Weeks</string>
+  <string name="axis_title_months">Months</string>
+  <string name="stock_data_title_quote">Quote</string>
+  <string name="stock_data_title_stocks">Stats</string>
+  <string name="stock_data_title_dividend">Dividend</string>
+  <string name="axis_title_price">Price</string>
 
 </resources>
